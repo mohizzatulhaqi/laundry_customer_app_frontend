@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laundry_customer_app/main.dart';
+import 'package:laundry_customer_app/screens/register_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -395,7 +396,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _showSnackBar('Create Account belum diimplementasikan');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterPhonePage(),
+                          ),
+                        );
                       },
                       child: const Text(
                         'Daftar Sekarang',
