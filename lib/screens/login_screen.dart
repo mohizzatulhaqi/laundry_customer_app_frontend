@@ -235,12 +235,21 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Nomor HP',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          'Nomor HP',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+
+                        const Text(
+                          '*',
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     Container(
@@ -289,8 +298,7 @@ class _LoginPageState extends State<LoginPage> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
-                                    color:
-                                        Colors.black, // Atur warna sesuai tema
+                                    color: Colors.black,
                                   ),
                                 ),
 
