@@ -582,7 +582,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                   const Expanded(
                     child: Center(
                       child: Text(
-                        ' \OTP',
+                        'OTP',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
