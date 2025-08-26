@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laundry_customer_app/core/theme/app_colors.dart';
+import 'package:laundry_customer_app/features/auth/presentation/widgets/primary_button.dart';
+import 'package:laundry_customer_app/features/auth/presentation/widgets/phone_input_field.dart';
+import 'package:laundry_customer_app/features/auth/presentation/widgets/name_input_field.dart';
+import 'package:laundry_customer_app/features/auth/presentation/widgets/email_input_field.dart';
 import 'package:laundry_customer_app/main.dart';
 
 // Step 1: Phone Number Input
@@ -266,150 +270,24 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Nomor HP',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const Text(
-                          '*',
-                          style: TextStyle(color: Colors.red, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        controller: _phoneController,
-                        focusNode: _phoneFocus,
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(13),
-                        ],
-                        decoration: InputDecoration(
-                          hintText: '81-x-xxx-xxx',
-                          hintStyle: TextStyle(color: AppColors.textPlaceholder),
-                          prefixIcon: Container(
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: 20,
-                                  height: 15,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/1000px-Flag_of_Indonesia.svg.png',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  '+62',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const SizedBox(width: 2),
-                                const Icon(Icons.keyboard_arrow_down, size: 16),
-                              ],
-                            ),
-                          ),
-                          suffixIcon: _phoneController.text.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.cancel,
-                                    size: 19,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    _phoneController.clear();
-                                    setState(() {});
-                                  },
-                                )
-                              : null,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                              color: AppColors.customPrimaryBlue,
-                              width: 2,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 16,
-                          ),
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                        ),
-                        onChanged: (value) => setState(() {}),
-                      ),
+                    PhoneInputField(
+                      controller: _phoneController,
+                      focusNode: _phoneFocus,
+                      onChanged: (value) => setState(() {}),
+                      onSubmitted: (_) => _sendOTP(),
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 26),
 
-                // Request OTP Button
-                SizedBox(
+                // Continue Button
+                const SizedBox(height: 24),
+                PrimaryButton(
+                  text: 'Lanjut',
+                  onPressed: _sendOTP,
+                  isLoading: _isLoading,
                   width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: _isLoading || _phoneController.text.length < 10
-                        ? null
-                        : _sendOTP,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.customPrimaryBlue,
-                      foregroundColor: AppColors.customWhite,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(26),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : const Text(
-                            'Lanjut',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                  ),
                 ),
 
                 const SizedBox(height: 14),
@@ -1104,123 +982,22 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
 
                 const SizedBox(height: 32),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Nama Lengkap',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const Text(
-                          '*',
-                          style: TextStyle(color: Colors.red, fontSize: 16),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 12),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        controller: _nameController,
-                        focusNode: _nameFocus,
-                        keyboardType: TextInputType.name,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.person_outline,
-                            color: AppColors.customPrimaryBlue,
-                          ),
-                          suffixIcon: _nameController.text.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.cancel,
-                                    size: 19,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    _nameController.clear();
-                                    setState(() {});
-                                  },
-                                )
-                              : null,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                              color: AppColors.customPrimaryBlue,
-                              width: 2,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 16,
-                          ),
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                        ),
-                        onChanged: (value) => setState(() {}),
-                      ),
-                    ),
-                  ],
+                NameInputField(
+                  controller: _nameController,
+                  focusNode: _nameFocus,
+                  onChanged: (value) => setState(() {}),
+                  onSubmitted: (_) => _continueToEmail(),
                 ),
 
                 const SizedBox(height: 26),
 
                 // Continue Button
-                SizedBox(
+                PrimaryButton(
+                  text: 'Lanjut',
+                  onPressed: _continueToEmail,
+                  isLoading: _isLoading,
+                  isDisabled: _nameController.text.trim().length < 2,
                   width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed:
-                        _isLoading || _nameController.text.trim().length < 2
-                        ? null
-                        : _continueToEmail,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.customPrimaryBlue,
-                      foregroundColor: AppColors.customWhite,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(26),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : const Text(
-                            'Lanjut',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                  ),
                 ),
               ],
             ),
@@ -1476,124 +1253,25 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
 
                 const SizedBox(height: 32),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Alamat Email',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const Text(
-                          '*',
-                          style: TextStyle(color: Colors.red, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        controller: _emailController,
-                        focusNode: _emailFocus,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: 'contoh@email.com',
-                          hintStyle: TextStyle(color: AppColors.textPlaceholder),
-                          prefixIcon: const Icon(
-                            Icons.email_outlined,
-                            color: AppColors.customPrimaryBlue,
-                          ),
-                          suffixIcon: _emailController.text.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.cancel,
-                                    size: 19,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    _emailController.clear();
-                                    setState(() {});
-                                  },
-                                )
-                              : null,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                              color: AppColors.customPrimaryBlue,
-                              width: 2,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 16,
-                          ),
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                        ),
-                        onChanged: (value) => setState(() {}),
-                      ),
-                    ),
-                  ],
+                EmailInputField(
+                  controller: _emailController,
+                  focusNode: _emailFocus,
+                  onChanged: (value) => setState(() {}),
+                  onSubmitted: (_) =>
+                      _isValidEmail(_emailController.text.trim())
+                      ? _completeRegistration()
+                      : null,
                 ),
 
                 const SizedBox(height: 26),
 
                 // Complete Registration Button
-                SizedBox(
+                PrimaryButton(
+                  text: 'Selesai',
+                  onPressed: _completeRegistration,
+                  isLoading: _isLoading,
+                  isDisabled: !_isValidEmail(_emailController.text.trim()),
                   width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed:
-                        _isLoading ||
-                            !_isValidEmail(_emailController.text.trim())
-                        ? null
-                        : _completeRegistration,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.customPrimaryBlue,
-                      foregroundColor: AppColors.customWhite,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(26),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : const Text(
-                            'Selesaikan Pendaftaran',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                  ),
                 ),
               ],
             ),

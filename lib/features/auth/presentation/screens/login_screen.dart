@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:laundry_customer_app/main.dart';
 import 'package:laundry_customer_app/features/auth/presentation/screens/register_screen.dart';
 import 'package:laundry_customer_app/core/theme/app_colors.dart';
+import 'package:laundry_customer_app/features/auth/presentation/widgets/primary_button.dart';
+import 'package:laundry_customer_app/features/auth/presentation/widgets/phone_input_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -237,154 +239,25 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Nomor HP',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
-                          ),
-                        ),
-
-                        const Text(
-                          '*',
-                          style: TextStyle(color: Colors.red, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        controller: _phoneController,
-                        focusNode: _phoneFocus,
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(13),
-                        ],
-                        decoration: InputDecoration(
-                          hintText: '81-x-xxx-xxx',
-                          hintStyle: TextStyle(
-                            color: AppColors.textPlaceholder,
-                          ),
-                          prefixIcon: Container(
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: 20,
-                                  height: 15,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/1000px-Flag_of_Indonesia.svg.png',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  '+62',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                ),
-
-                                const SizedBox(width: 2),
-                                const Icon(Icons.keyboard_arrow_down, size: 16),
-                              ],
-                            ),
-                          ),
-                          suffixIcon: _phoneController.text.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(
-                                    Icons.cancel,
-                                    size: 19,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    _phoneController.clear();
-                                    setState(() {});
-                                  },
-                                )
-                              : null,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                              color: AppColors.customPrimaryBlue,
-                              width: 2,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 16,
-                          ),
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                        ),
-                        onChanged: (value) => setState(() {}),
-                      ),
+                    PhoneInputField(
+                      controller: _phoneController,
+                      focusNode: _phoneFocus,
+                      onChanged: (value) => setState(() {}),
+                      onSubmitted: (_) => _sendOTP(),
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 26),
 
-                // Request OTP Button
-                SizedBox(
+                // Login Button
+                const SizedBox(height: 24),
+                PrimaryButton(
+                  text: 'Lanjut',
+                  onPressed: _sendOTP,
+                  isLoading: _isLoading,
+                  isDisabled: _phoneController.text.trim().length < 10,
                   width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: _isLoading || _phoneController.text.length < 10
-                        ? null
-                        : _sendOTP,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.customPrimaryBlue,
-                      foregroundColor: AppColors.customWhite,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(26),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : const Text(
-                            'Lanjut',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                  ),
                 ),
 
                 const SizedBox(height: 14),
