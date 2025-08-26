@@ -5,7 +5,7 @@ import '../models/auth_response.dart';
 
 part 'api_client.g.dart';
 
-@RestApi(baseUrl: 'http://localhost:8080')
+@RestApi()
 abstract class ApiClient {
   factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient;
 

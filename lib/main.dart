@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:laundry_customer_app/onboarding/onboarding_page.dart';
-import 'package:laundry_customer_app/screens/login_screen.dart';
+import 'package:laundry_customer_app/features/onboarding/presentations/screens/onboarding_screen.dart';
+import 'package:laundry_customer_app/features/auth/presentation/screens/login_screen.dart';
 
 const Color customPrimaryBlue = Color(0xFF0EA5E9);
 const Color customMintGreen = Color(0xFF10B981);

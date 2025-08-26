@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laundry_customer_app/main.dart';
-import 'package:laundry_customer_app/screens/register_screen.dart';
+import 'package:laundry_customer_app/features/auth/presentation/screens/register_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

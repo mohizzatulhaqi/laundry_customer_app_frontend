@@ -5,57 +5,47 @@ import '../models/auth_request.dart';
 import '../models/auth_response.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8080';
-  late final Dio _dio;
-  late final ApiClient _apiClient;
+  final Dio _dio;
+  final ApiClient _apiClient;
 
-  // Singleton pattern
-  static final ApiService _instance = ApiService._internal();
-  factory ApiService() => _instance;
-
-  ApiService._internal() {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: baseUrl,
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        sendTimeout: const Duration(seconds: 30),
-        headers: {'Content-Type': 'application/json'},
+  ApiService(String baseUrl)
+    : _dio = Dio(
+        BaseOptions(
+          baseUrl: baseUrl,
+          connectTimeout: const Duration(seconds: 30),
+          receiveTimeout: const Duration(seconds: 30),
+          sendTimeout: const Duration(seconds: 30),
+          headers: {'Content-Type': 'application/json'},
+        ),
       ),
-    );
-
+      _apiClient = ApiClient(
+        Dio(BaseOptions(baseUrl: baseUrl)),
+        baseUrl: baseUrl,
+      ) {
     _setupInterceptors();
-    _apiClient = ApiClient(_dio);
   }
 
   void _setupInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // Get token from SharedPreferences
           final prefs = await SharedPreferences.getInstance();
           final token = prefs.getString('token');
-
-          // Add token to header if exists
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
           }
           return handler.next(options);
         },
         onError: (DioException e, handler) async {
-          // Handle 401 Unauthorized
           if (e.response?.statusCode == 401) {
-            // Clear token and redirect to login
             final prefs = await SharedPreferences.getInstance();
             await prefs.remove('token');
-            // You might want to add navigation to login screen here
           }
           return handler.next(e);
         },
       ),
     );
 
-    // Add logging interceptor for debugging
     _dio.interceptors.add(
       LogInterceptor(
         requestBody: true,
@@ -110,7 +100,10 @@ class ApiService {
   }
 
   // Login
-  Future<ApiResponse<dynamic>> login(String phoneNumber) async {
+  Future<ApiResponse<dynamic>> login(
+    String phoneNumber,
+    String password,
+  ) async {
     try {
       final request = LoginRequest(phoneNumber: phoneNumber);
       return await _apiClient.login(request);
