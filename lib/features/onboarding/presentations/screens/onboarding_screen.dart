@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laundry_customer_app/core/theme/app_colors.dart';
 import 'package:laundry_customer_app/main.dart';
 import 'package:lottie/lottie.dart';
 
@@ -179,7 +180,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: ElevatedButton(
                   onPressed: _next,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: customPrimaryBlue,
+                    backgroundColor: AppColors.customPrimaryBlue,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),

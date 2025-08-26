@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laundry_customer_app/main.dart';
 import 'package:laundry_customer_app/features/auth/presentation/screens/register_screen.dart';
+import 'package:laundry_customer_app/core/theme/app_colors.dart';
+import 'package:laundry_customer_app/core/theme/app_theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -67,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: customWhite,
+      backgroundColor: AppColors.customWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -132,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 180,
                           height: 180,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.3),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(100),
                           ),
                         ),
@@ -144,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.5),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
@@ -156,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.6),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(40),
                           ),
                         ),
@@ -180,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: const Icon(
                             Icons.local_laundry_service,
                             size: 250,
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                           ),
                         ),
                       ),
@@ -192,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -204,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 6,
                           height: 6,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -227,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   'Akses layanan laundry online dengan mudah',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: textSubheading,
+                    color: AppColors.textSubheading,
                   ),
                 ),
 
@@ -275,7 +277,9 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                         decoration: InputDecoration(
                           hintText: '81-x-xxx-xxx',
-                          hintStyle: TextStyle(color: textPlaceholder),
+                          hintStyle: TextStyle(
+                            color: AppColors.textPlaceholder,
+                          ),
                           prefixIcon: Container(
                             padding: const EdgeInsets.all(12),
                             child: Row(
@@ -328,7 +332,7 @@ class _LoginPageState extends State<LoginPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
-                              color: customPrimaryBlue,
+                              color: AppColors.customPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -356,8 +360,8 @@ class _LoginPageState extends State<LoginPage> {
                         ? null
                         : _sendOTP,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: customPrimaryBlue,
-                      foregroundColor: customWhite,
+                      backgroundColor: AppColors.customPrimaryBlue,
+                      foregroundColor: AppColors.customWhite,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(26),
                       ),
@@ -406,7 +410,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Daftar Sekarang',
                         style: TextStyle(
-                          color: customPrimaryBlue,
+                          color: AppColors.customPrimaryBlue,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -588,7 +592,7 @@ class _OTPPageState extends State<OTPPage> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: customPrimaryBlue.withOpacity(0.3),
+                          color: AppColors.customPrimaryBlue.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(40),
                         ),
                       ),
@@ -600,7 +604,7 @@ class _OTPPageState extends State<OTPPage> {
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          color: customPrimaryBlue.withOpacity(0.4),
+                          color: AppColors.customPrimaryBlue.withOpacity(0.4),
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
@@ -631,12 +635,13 @@ class _OTPPageState extends State<OTPPage> {
                                   width: 140,
                                   height: 110,
                                   decoration: BoxDecoration(
-                                    color: customPrimaryBlue.withOpacity(0.2),
+                                    color: AppColors.customPrimaryBlue
+                                        .withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: const Icon(
                                     Icons.sms,
-                                    color: customPrimaryBlue,
+                                    color: AppColors.customPrimaryBlue,
                                     size: 68,
                                   ),
                                 ),
@@ -669,7 +674,7 @@ class _OTPPageState extends State<OTPPage> {
                               width: 80,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: customPrimaryBlue,
+                                color: AppColors.customPrimaryBlue,
                                 borderRadius: BorderRadius.circular(15),
                                 boxShadow: [
                                   BoxShadow(
@@ -702,7 +707,7 @@ class _OTPPageState extends State<OTPPage> {
                         width: 8,
                         height: 8,
                         decoration: const BoxDecoration(
-                          color: customPrimaryBlue,
+                          color: AppColors.customPrimaryBlue,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -714,7 +719,7 @@ class _OTPPageState extends State<OTPPage> {
                         width: 6,
                         height: 6,
                         decoration: const BoxDecoration(
-                          color: customPrimaryBlue,
+                          color: AppColors.customPrimaryBlue,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -737,12 +742,15 @@ class _OTPPageState extends State<OTPPage> {
               const SizedBox(height: 12),
               const Text(
                 'Masukkan OTP yang kami kirim',
-                style: TextStyle(fontSize: 16, color: textSubheading),
+                style: TextStyle(fontSize: 16, color: AppColors.textSubheading),
               ),
               const SizedBox(height: 4),
               Text(
                 'ke nomer +62${widget.phoneNumber}',
-                style: const TextStyle(fontSize: 16, color: textSubheading),
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSubheading,
+                ),
               ),
 
               const SizedBox(height: 38),
@@ -785,7 +793,7 @@ class _OTPPageState extends State<OTPPage> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: const BorderSide(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             width: 2,
                           ),
                         ),
@@ -817,7 +825,10 @@ class _OTPPageState extends State<OTPPage> {
                 children: [
                   Text(
                     'Tidak menerima kode? ',
-                    style: TextStyle(fontSize: 14, color: textSubheading),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textSubheading,
+                    ),
                   ),
                   GestureDetector(
                     onTap: _canResend ? _resendOTP : null,
@@ -827,7 +838,9 @@ class _OTPPageState extends State<OTPPage> {
                           : 'Kirim Ulang lagi dalam ($_resendTimer)',
                       style: TextStyle(
                         fontSize: 14,
-                        color: _canResend ? customPrimaryBlue : Colors.grey,
+                        color: _canResend
+                            ? AppColors.customPrimaryBlue
+                            : Colors.grey,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

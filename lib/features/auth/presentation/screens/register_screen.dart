@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:laundry_customer_app/core/theme/app_colors.dart';
 import 'package:laundry_customer_app/main.dart';
 
 // Step 1: Phone Number Input
@@ -69,7 +70,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: customWhite,
+      backgroundColor: AppColors.customWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -161,7 +162,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           width: 160,
                           height: 160,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.3),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(80),
                           ),
                         ),
@@ -173,7 +174,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           width: 90,
                           height: 90,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.5),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(45),
                           ),
                         ),
@@ -185,7 +186,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           width: 70,
                           height: 70,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.6),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(35),
                           ),
                         ),
@@ -209,7 +210,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           child: const Icon(
                             Icons.person_add,
                             size: 220,
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                           ),
                         ),
                       ),
@@ -221,7 +222,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -233,7 +234,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           width: 6,
                           height: 6,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -256,7 +257,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                 Text(
                   'Daftarkan nomor HP untuk membuat akun',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: textSubheading,
+                    color: AppColors.textSubheading,
                   ),
                 ),
 
@@ -355,7 +356,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
-                              color: customPrimaryBlue,
+                              color: AppColors.customPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -383,8 +384,8 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                         ? null
                         : _sendOTP,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: customPrimaryBlue,
-                      foregroundColor: customWhite,
+                      backgroundColor: AppColors.customPrimaryBlue,
+                      foregroundColor: AppColors.customWhite,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(26),
                       ),
@@ -426,7 +427,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                       child: const Text(
                         'Masuk Sekarang',
                         style: TextStyle(
-                          color: customPrimaryBlue,
+                          color: AppColors.customPrimaryBlue,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -610,7 +611,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: customPrimaryBlue.withOpacity(0.3),
+                          color: AppColors.customPrimaryBlue.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(40),
                         ),
                       ),
@@ -622,7 +623,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          color: customPrimaryBlue.withOpacity(0.4),
+                          color: AppColors.customPrimaryBlue.withOpacity(0.4),
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
@@ -653,12 +654,13 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                                   width: 140,
                                   height: 110,
                                   decoration: BoxDecoration(
-                                    color: customPrimaryBlue.withOpacity(0.2),
+                                    color: AppColors.customPrimaryBlue
+                                        .withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: const Icon(
                                     Icons.sms,
-                                    color: customPrimaryBlue,
+                                    color: AppColors.customPrimaryBlue,
                                     size: 68,
                                   ),
                                 ),
@@ -691,7 +693,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                               width: 80,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: customPrimaryBlue,
+                                color: AppColors.customPrimaryBlue,
                                 borderRadius: BorderRadius.circular(15),
                                 boxShadow: [
                                   BoxShadow(
@@ -724,7 +726,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                         width: 8,
                         height: 8,
                         decoration: const BoxDecoration(
-                          color: customPrimaryBlue,
+                          color: AppColors.customPrimaryBlue,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -736,7 +738,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                         width: 6,
                         height: 6,
                         decoration: const BoxDecoration(
-                          color: customPrimaryBlue,
+                          color: AppColors.customPrimaryBlue,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -759,12 +761,15 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
               const SizedBox(height: 12),
               const Text(
                 'Masukkan OTP yang kami kirim',
-                style: TextStyle(fontSize: 16, color: textSubheading),
+                style: TextStyle(fontSize: 16, color: AppColors.textSubheading),
               ),
               const SizedBox(height: 4),
               Text(
                 'ke nomer +62${widget.phoneNumber}',
-                style: const TextStyle(fontSize: 16, color: textSubheading),
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSubheading,
+                ),
               ),
 
               const SizedBox(height: 38),
@@ -807,7 +812,7 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: const BorderSide(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             width: 2,
                           ),
                         ),
@@ -839,7 +844,10 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                 children: [
                   Text(
                     'Tidak menerima kode? ',
-                    style: TextStyle(fontSize: 14, color: textSubheading),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textSubheading,
+                    ),
                   ),
                   GestureDetector(
                     onTap: _canResend ? _resendOTP : null,
@@ -849,7 +857,9 @@ class _RegisterOTPPageState extends State<RegisterOTPPage> {
                           : 'Kirim Ulang lagi dalam ($_resendTimer)',
                       style: TextStyle(
                         fontSize: 14,
-                        color: _canResend ? customPrimaryBlue : Colors.grey,
+                        color: _canResend
+                            ? AppColors.customPrimaryBlue
+                            : Colors.grey,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -931,7 +941,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: customWhite,
+      backgroundColor: AppColors.customWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -993,7 +1003,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           width: 180,
                           height: 180,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.3),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(100),
                           ),
                         ),
@@ -1005,7 +1015,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.5),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
@@ -1017,7 +1027,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.6),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(40),
                           ),
                         ),
@@ -1041,7 +1051,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           child: const Icon(
                             Icons.person,
                             size: 250,
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                           ),
                         ),
                       ),
@@ -1053,7 +1063,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -1065,7 +1075,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           width: 6,
                           height: 6,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -1088,7 +1098,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                 Text(
                   'Masukkan nama lengkap untuk melanjutkan',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: textSubheading,
+                    color: AppColors.textSubheading,
                   ),
                 ),
 
@@ -1134,7 +1144,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                         decoration: InputDecoration(
                           prefixIcon: const Icon(
                             Icons.person_outline,
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                           ),
                           suffixIcon: _nameController.text.isNotEmpty
                               ? IconButton(
@@ -1156,7 +1166,7 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
-                              color: customPrimaryBlue,
+                              color: AppColors.customPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -1185,8 +1195,8 @@ class _RegisterNamePageState extends State<RegisterNamePage> {
                         ? null
                         : _continueToEmail,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: customPrimaryBlue,
-                      foregroundColor: customWhite,
+                      backgroundColor: AppColors.customPrimaryBlue,
+                      foregroundColor: AppColors.customWhite,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(26),
                       ),
@@ -1302,7 +1312,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: customWhite,
+      backgroundColor: AppColors.customWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -1364,7 +1374,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           width: 180,
                           height: 180,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.3),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(100),
                           ),
                         ),
@@ -1376,7 +1386,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           width: 100,
                           height: 100,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.5),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
@@ -1388,7 +1398,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: customPrimaryBlue.withOpacity(0.6),
+                            color: AppColors.customPrimaryBlue.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(40),
                           ),
                         ),
@@ -1412,7 +1422,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           child: const Icon(
                             Icons.email,
                             size: 250,
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                           ),
                         ),
                       ),
@@ -1424,7 +1434,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -1436,7 +1446,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           width: 6,
                           height: 6,
                           decoration: const BoxDecoration(
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -1460,7 +1470,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                   'Masukkan alamat email untuk menyelesaikan pendaftaran',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: textSubheading,
+                    color: AppColors.textSubheading,
                   ),
                 ),
 
@@ -1506,7 +1516,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           hintStyle: TextStyle(color: textPlaceholder),
                           prefixIcon: const Icon(
                             Icons.email_outlined,
-                            color: customPrimaryBlue,
+                            color: AppColors.customPrimaryBlue,
                           ),
                           suffixIcon: _emailController.text.isNotEmpty
                               ? IconButton(
@@ -1528,7 +1538,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
-                              color: customPrimaryBlue,
+                              color: AppColors.customPrimaryBlue,
                               width: 2,
                             ),
                           ),
@@ -1558,8 +1568,8 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                         ? null
                         : _completeRegistration,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: customPrimaryBlue,
-                      foregroundColor: customWhite,
+                      backgroundColor: AppColors.customPrimaryBlue,
+                      foregroundColor: AppColors.customWhite,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(26),
                       ),
