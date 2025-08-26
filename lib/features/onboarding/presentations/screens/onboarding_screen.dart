@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:laundry_customer_app/core/theme/app_colors.dart';
+import 'package:laundry_customer_app/features/onboarding/presentations/widgets/onboarding_button.dart';
 import 'package:lottie/lottie.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -172,23 +172,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
             ),
             // Bottom button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _next,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.customPrimaryBlue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                  ),
-                  child: Text(
-                    _currentIndex == _pages.length - 1 ? 'Mulai' : 'Lanjut',
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                ),
-              ),
+            PrimaryButton(
+              label: _currentIndex == _pages.length - 1 ? 'Mulai' : 'Lanjut',
+              onPressed: _next,
+              margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
             ),
           ],
         ),
