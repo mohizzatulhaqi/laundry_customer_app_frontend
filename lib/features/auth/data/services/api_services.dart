@@ -99,14 +99,30 @@ class ApiService {
     }
   }
 
-  // Login
+  // Login with OTP
   Future<ApiResponse<dynamic>> login(
     String phoneNumber,
-    String password,
+    String otp,
   ) async {
     try {
-      final request = LoginRequest(phoneNumber: phoneNumber);
-      return await _apiClient.login(request);
+      // First verify the OTP
+      final verifyResponse = await verifyOtp(phoneNumber, otp);
+      
+      if (verifyResponse.success) {
+        // If OTP is valid, proceed with login
+        final request = LoginRequest(phoneNumber: phoneNumber);
+        final loginResponse = await _apiClient.login(request);
+        
+        // Save token if login is successful
+        if (loginResponse.success && loginResponse.token != null) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('token', loginResponse.token!);
+        }
+        
+        return loginResponse;
+      } else {
+        return verifyResponse;
+      }
     } on DioException catch (e) {
       throw _handleError(e);
     }
