@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:laundry_customer_app/core/theme/app_colors.dart';
-import 'package:laundry_customer_app/main.dart';
 import 'package:lottie/lottie.dart';
 
 class OnboardingPage extends StatefulWidget {

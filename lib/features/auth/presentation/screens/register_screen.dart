@@ -304,7 +304,7 @@ class _RegisterPhonePageState extends State<RegisterPhonePage> {
                         ],
                         decoration: InputDecoration(
                           hintText: '81-x-xxx-xxx',
-                          hintStyle: TextStyle(color: textPlaceholder),
+                          hintStyle: TextStyle(color: AppColors.textPlaceholder),
                           prefixIcon: Container(
                             padding: const EdgeInsets.all(12),
                             child: Row(
@@ -1513,7 +1513,7 @@ class _RegisterEmailPageState extends State<RegisterEmailPage> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: 'contoh@email.com',
-                          hintStyle: TextStyle(color: textPlaceholder),
+                          hintStyle: TextStyle(color: AppColors.textPlaceholder),
                           prefixIcon: const Icon(
                             Icons.email_outlined,
                             color: AppColors.customPrimaryBlue,
