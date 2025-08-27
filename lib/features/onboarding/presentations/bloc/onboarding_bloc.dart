@@ -19,5 +19,10 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     on<PageChangedEvent>((event, emit) {
       emit(state.copyWith(currentIndex: event.index));
     });
+
+    on<FinishOnboardingEvent>((event, emit) {
+      // Handle finish logic if needed
+      // This could emit a different state or trigger navigation
+    });
   }
 }

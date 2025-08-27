@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:laundry_customer_app/features/onboarding/presentations/bloc/onboarding_bloc.dart';
+import 'package:laundry_customer_app/features/onboarding/presentations/bloc/onboarding_event.dart';
+import 'package:laundry_customer_app/features/onboarding/presentations/bloc/onboarding_state.dart';
 import 'package:laundry_customer_app/features/onboarding/presentations/widgets/onboarding_button.dart';
 import 'package:lottie/lottie.dart';
+
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key, this.onFinish});
@@ -13,7 +18,6 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _controller = PageController();
-  int _currentIndex = 0;
 
   final List<_OnboardContent> _pages = const [
     _OnboardContent(
@@ -34,18 +38,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
     ),
   ];
 
-  void _next() {
-    if (_currentIndex < _pages.length - 1) {
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _next(BuildContext context) {
+    final bloc = context.read<OnboardingBloc>();
+    final currentIndex = bloc.state.currentIndex;
+
+    if (currentIndex < _pages.length - 1) {
+      bloc.add(NextPageEvent());
       _controller.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     } else {
-      _finish();
+      _finish(context);
     }
   }
 
-  void _skip() {
+  void _skip(BuildContext context) {
+    context.read<OnboardingBloc>().add(SkipEvent());
     _controller.animateToPage(
       _pages.length - 1,
       duration: const Duration(milliseconds: 300),
@@ -53,7 +68,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
-  void _finish() {
+  void _finish(BuildContext context) {
+    context.read<OnboardingBloc>().add(FinishOnboardingEvent());
+
     // If host provides a finish handler, use it. Otherwise try pop.
     if (widget.onFinish != null) {
       widget.onFinish!();
@@ -65,120 +82,137 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top actions
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+
+    return BlocProvider(
+      create: (context) => OnboardingBloc(totalPages: _pages.length),
+      child: BlocBuilder<OnboardingBloc, OnboardingState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: Column(
                 children: [
-                  if (_currentIndex < _pages.length - 1)
-                    TextButton(onPressed: _skip, child: const Text('Lewati')),
-                ],
-              ),
-            ),
-            // Pages
-            Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: _pages.length,
-                onPageChanged: (i) => setState(() => _currentIndex = i),
-                itemBuilder: (context, index) {
-                  final p = _pages[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Stack(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // Lottie animation layer (background) - posisi tetap
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          bottom: 200,
-                          child: Center(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                // Background lingkaran tetap kecil
-                                Container(
-                                  width: 180,
-                                  height: 180,
-                                  decoration: BoxDecoration(
-                                    color: theme.colorScheme.primaryContainer,
-                                    shape: BoxShape.circle,
+                        if (state.currentIndex < _pages.length - 1)
+                          TextButton(
+                            onPressed: () => _skip(context),
+                            child: const Text('Lewati'),
+                          ),
+                      ],
+                    ),
+                  ),
+                  // Pages
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _controller,
+                      itemCount: _pages.length,
+                      onPageChanged: (index) {
+                        context.read<OnboardingBloc>().add(
+                          PageChangedEvent(index),
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        final p = _pages[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 200,
+                                child: Center(
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 180,
+                                        height: 180,
+                                        decoration: BoxDecoration(
+                                          color: theme
+                                              .colorScheme
+                                              .primaryContainer,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      Lottie.asset(
+                                        p.lottieAsset!,
+                                        width: 1000,
+                                        height: 1000,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                // Lottie besar di atas lingkaran
-                                Lottie.asset(
-                                  p.lottieAsset!,
-                                  width: 1000,
-                                  height: 1000,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        // Text layer (foreground) - posisi tetap
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 120, // Jarak dari bawah - bisa disesuaikan
-                          child: Column(
-                            children: [
-                              Text(
-                                p.title,
-                                style: theme.textTheme.headlineMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 12),
-                              Text(
-                                p.subtitle,
-                                style: theme.textTheme.bodyLarge?.copyWith(
-                                  color: theme.textTheme.bodyMedium?.color,
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                bottom:
+                                    120, 
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      p.title,
+                                      style: theme.textTheme.headlineMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      p.subtitle,
+                                      style: theme.textTheme.bodyLarge
+                                          ?.copyWith(
+                                            color: theme
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.color,
+                                          ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
-                                textAlign: TextAlign.center,
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                  // Indicators
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        _pages.length,
+                        (i) => _Dot(active: i == state.currentIndex),
+                      ),
+                    ),
+                  ),
+                  // Bottom button
+                  PrimaryButton(
+                    label: state.currentIndex == _pages.length - 1
+                        ? 'Mulai'
+                        : 'Lanjut',
+                    onPressed: () => _next(context),
+                    margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  ),
+                ],
               ),
             ),
-            // Indicators
-            Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  _pages.length,
-                  (i) => _Dot(active: i == _currentIndex),
-                ),
-              ),
-            ),
-            // Bottom button
-            PrimaryButton(
-              label: _currentIndex == _pages.length - 1 ? 'Mulai' : 'Lanjut',
-              onPressed: _next,
-              margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

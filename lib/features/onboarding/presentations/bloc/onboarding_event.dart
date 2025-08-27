@@ -1,14 +1,23 @@
 import 'package:equatable/equatable.dart';
 
-class OnboardingState extends Equatable {
-  final int currentIndex;
-
-  const OnboardingState({this.currentIndex = 0});
-
-  OnboardingState copyWith({int? currentIndex}) {
-    return OnboardingState(currentIndex: currentIndex ?? this.currentIndex);
-  }
+abstract class OnboardingEvent extends Equatable {
+  const OnboardingEvent();
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
+
+class NextPageEvent extends OnboardingEvent {}
+
+class SkipEvent extends OnboardingEvent {}
+
+class PageChangedEvent extends OnboardingEvent {
+  final int index;
+
+  const PageChangedEvent(this.index);
+
+  @override
+  List<Object?> get props => [index];
+}
+
+class FinishOnboardingEvent extends OnboardingEvent {}
