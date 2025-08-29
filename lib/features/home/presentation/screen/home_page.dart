@@ -3,8 +3,70 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laundry_customer_app/core/theme/app_colors.dart';
 import 'package:laundry_customer_app/features/home/presentation/bloc/location_bloc.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+
+  final List<String> _searchHints = [
+    "Cari layanan laundry",
+    "Temukan laundry terdekat",
+    "Cuci sepatu & tas",
+    "Laundry kiloan murah",
+    "Dry cleaning berkualitas",
+    "Setrika express",
+    "Laundry 24 jam",
+  ];
+
+  int _currentHintIndex = 0;
+  String _currentHint = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
+    _currentHint = _searchHints[0];
+    _startHintAnimation();
+  }
+
+  void _startHintAnimation() {
+    _animationController.forward().then((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          _animationController.reverse().then((_) {
+            if (mounted) {
+              setState(() {
+                _currentHintIndex =
+                    (_currentHintIndex + 1) % _searchHints.length;
+                _currentHint = _searchHints[_currentHintIndex];
+              });
+              _startHintAnimation();
+            }
+          });
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,69 +140,64 @@ class HomePage extends StatelessWidget {
           ],
         ),
 
-        body: BlocBuilder<LocationBloc, LocationState>(
-          builder: (context, state) {
-            if (state is LocationLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is LocationLoaded) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Alamat Lengkap:",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: Colors.grey[300]!),
-                      ),
-                      child: Text(
-                        state.address,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ],
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(48.0),
+                  border: Border.all(color: Colors.grey[300]!),
                 ),
-              );
-            } else if (state is LocationError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.location_off, size: 64, color: Colors.red),
-                    const SizedBox(height: 16),
-                    Text(
-                      state.message,
-                      style: const TextStyle(fontSize: 16, color: Colors.red),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<LocationBloc>().add(GetLocationEvent());
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: null,
+                    hint: AnimatedBuilder(
+                      animation: _fadeAnimation,
+                      builder: (context, child) {
+                        return Opacity(
+                          opacity: _fadeAnimation.value,
+                          child: Text(
+                            _currentHint,
+                            style: TextStyle(
+                              color: AppColors.textSubheading,
+                              fontSize: 16,
+                            ),
+                          ),
+                        );
                       },
-                      child: const Text("Coba Lagi"),
                     ),
-                  ],
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.customPrimaryBlue,
+                      size: 24,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        // Filter action
+                      },
+                      icon: const Icon(
+                        Icons.tune,
+                        color: AppColors.customPrimaryBlue,
+                        size: 24,
+                      ),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 16.0,
+                    ),
+                  ),
+                  style: const TextStyle(fontSize: 16),
+                  onSubmitted: (value) {
+                    // Handle search submission
+                  },
                 ),
-              );
-            }
-            return const Center(child: Text("Menunggu lokasi..."));
-          },
+              ),
+            ],
+          ),
         ),
       ),
     );
