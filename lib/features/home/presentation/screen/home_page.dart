@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laundry_customer_app/core/theme/app_colors.dart';
 import 'package:laundry_customer_app/features/home/presentation/bloc/location_bloc.dart';
+import 'package:laundry_customer_app/features/home/presentation/widget/banner_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  late PageController _bannerController;
 
   final List<String> _searchHints = [
     "Cari layanan laundry",
@@ -26,6 +28,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   int _currentHintIndex = 0;
   String _currentHint = "";
+  int _currentBannerIndex = 0;
 
   @override
   void initState() {
@@ -39,8 +42,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
+    _bannerController = PageController();
     _currentHint = _searchHints[0];
     _startHintAnimation();
+    _startBannerAutoSlide();
   }
 
   void _startHintAnimation() {
@@ -62,9 +67,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
+  void _startBannerAutoSlide() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        _currentBannerIndex = (_currentBannerIndex + 1) % 3;
+        _bannerController.animateToPage(
+          _currentBannerIndex,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+        _startBannerAutoSlide();
+      }
+    });
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _bannerController.dispose();
     super.dispose();
   }
 
@@ -140,65 +160,98 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ],
         ),
 
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
+        body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(48.0),
-                  border: Border.all(color: Colors.grey[300]!),
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: null,
-                    hint: AnimatedBuilder(
-                      animation: _fadeAnimation,
-                      builder: (context, child) {
-                        return Opacity(
-                          opacity: _fadeAnimation.value,
-                          child: Text(
-                            _currentHint,
-                            style: TextStyle(
-                              color: AppColors.textSubheading,
-                              fontSize: 16,
+              // Search Bar
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(48.0),
+                    border: Border.all(color: Colors.grey[300]!),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: null,
+                      hint: AnimatedBuilder(
+                        animation: _fadeAnimation,
+                        builder: (context, child) {
+                          return Opacity(
+                            opacity: _fadeAnimation.value,
+                            child: Text(
+                              _currentHint,
+                              style: TextStyle(
+                                color: AppColors.textSubheading,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: AppColors.customPrimaryBlue,
-                      size: 24,
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        // Filter action
-                      },
-                      icon: const Icon(
-                        Icons.tune,
+                          );
+                        },
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      prefixIcon: const Icon(
+                        Icons.search,
                         color: AppColors.customPrimaryBlue,
                         size: 24,
                       ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          // Filter action
+                        },
+                        icon: const Icon(
+                          Icons.tune,
+                          color: AppColors.customPrimaryBlue,
+                          size: 24,
+                        ),
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 16.0,
+                      ),
                     ),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 16.0,
-                    ),
+                    style: const TextStyle(fontSize: 16),
+                    onSubmitted: (value) {
+                      // Handle search submission
+                    },
                   ),
-                  style: const TextStyle(fontSize: 16),
-                  onSubmitted: (value) {
-                    // Handle search submission
-                  },
+                ),
+              ),
+
+              // Hero Banner/Carousel
+              Container(
+                height: 180,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: PageView(
+                  controller: _bannerController,
+                  children: const [
+                    BannerCard(
+                      title: "Diskon 30% Cuci Kiloan",
+                      subtitle: "Minimal 5kg, berlaku sampai 31 Agustus",
+                      color: Colors.blue,
+                      icon: Icons.local_laundry_service,
+                    ),
+                    BannerCard(
+                      title: "Gratis Pickup & Delivery",
+                      subtitle: "Untuk pembelian di atas 50rb",
+                      color: Colors.green,
+                      icon: Icons.local_shipping,
+                    ),
+                    BannerCard(
+                      title: "Express Service 3 Jam",
+                      subtitle: "Cuci setrika dalam 3 jam saja",
+                      color: Colors.orange,
+                      icon: Icons.timer,
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
+
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: AppColors.customPrimaryBlue,
