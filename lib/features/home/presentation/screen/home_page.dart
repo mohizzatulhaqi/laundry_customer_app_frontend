@@ -199,6 +199,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ],
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: AppColors.customPrimaryBlue,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
+          selectedLabelStyle: const TextStyle(
+            fontSize: 12,
+            color: AppColors.customPrimaryBlue,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'Riwayat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.local_offer),
+              label: 'Promo',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+          ],
+        ),
       ),
     );
   }
