@@ -1,8 +1,11 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laundry_customer_app/core/theme/app_colors.dart';
 import 'package:laundry_customer_app/features/home/presentation/bloc/location_bloc.dart';
 import 'package:laundry_customer_app/features/home/presentation/widget/banner_widget.dart';
+import 'package:laundry_customer_app/features/home/presentation/widget/service_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -248,6 +251,65 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: GridView.count(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  // Tambahkan childAspectRatio untuk mengontrol tinggi item
+                  childAspectRatio:
+                      0.8, // Nilai ini akan membuat item lebih tinggi
+                  children: [
+                    ServiceCard(
+                      icon: Icons.local_laundry_service,
+                      title: "Cuci Kiloan",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.cleaning_services,
+                      title: "Dry Clean",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.access_time,
+                      title: "Cuci Express ",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.directions_run,
+                      title: "Laundry Sepatu",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.backpack,
+                      title: "Laundry Tas",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.checkroom,
+                      title: "Laundry Luaran",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.inventory_2,
+                      title: "Laundry Satuan",
+                      onTap: () {},
+                    ),
+                    ServiceCard(
+                      icon: Icons.iron,
+                      title: "Jasa Setrika",
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
             ],
           ),
         ),
