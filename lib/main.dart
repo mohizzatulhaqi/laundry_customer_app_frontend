@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:laundry_customer_app/core/theme/app_theme.dart';
+import 'package:laundry_customer_app/features/home/presentation/screen/home_page.dart';
 import 'package:laundry_customer_app/features/onboarding/presentations/screens/onboarding_screen.dart';
 import 'package:laundry_customer_app/features/auth/presentation/screens/login_screen.dart';
 
@@ -15,15 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Laundry Customer App',
       theme: AppTheme.lightTheme,
-      home: Builder(
-        builder: (ctx) => OnboardingPage(
-          onFinish: () {
-            Navigator.of(ctx).pushReplacement(
-              MaterialPageRoute(builder: (_) => const LoginPage()),
-            );
-          },
-        ),
-      ),
+      home: Builder(builder: (ctx) => HomePage()),
     );
   }
 }
