@@ -28,5 +28,14 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Aplikasi membutuhkan akses lokasi untuk menampilkan posisi Anda.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>Aplikasi membutuhkan akses lokasi bahkan di latar belakang.</string>
+<key>NSLocationUsageDescription</key>
+<string>Aplikasi membutuhkan akses lokasi Anda untuk memberikan layanan.</string>
+
+
 </dict>
 </plist>
